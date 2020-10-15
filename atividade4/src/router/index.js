@@ -32,6 +32,13 @@ const routes = [{
     },
 
     {
+        path: '/filtrar/:marca',
+        name: 'Filtrar',
+        component: Filtrar,
+        props: true,
+    },
+
+    {
         path: '/about',
         name: 'About',
         // route level code-splitting

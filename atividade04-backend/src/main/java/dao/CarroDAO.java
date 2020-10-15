@@ -17,7 +17,7 @@ public class CarroDAO {
     }
  
     private static void initCarros() {
-    	Carro carro1 = new Carro (1, "Veinho", "gol", "1999", "2000" , "10/12/99");
+    	Carro carro1 = new Carro (1, "Uno", "Fiat", "2019", "2020" , "10/12/19");
     	
  
     	carroMap.put(carro1.getId(), carro1);
@@ -28,20 +28,39 @@ public class CarroDAO {
         return carroMap.get(id);
     }
  
-    public static Carro getCarroByMarca(String marca) {
+    public static List<Carro> getCarroByMarca(String marca) {
         List<Carro> list = getAllCarros();
- 
+        List<Carro> carros = new ArrayList<>();
+        
         for (Carro carro : list) {
+//        	System.out.println(carro.getMarca());
             if (carro.getMarca().equals(marca)) {
-                return carro;
+//            	System.out.println(carro.getMarca().equals(marca));
+                carros.add(carro);
+            }
+        }
+        
+        return carros;
+    }
+    
+    public static List<Carro> getCarroByQuantidade(int quantidade) {
+        List<Carro> list = getAllCarros();
+        List<Carro> lista = new ArrayList<>();
+        int i = 0;
+        
+        for (Carro carro : list) {
+            if (i != 0) {
+            	lista.add(carro);
+                i--;
+            }else {
+            	return lista;
             }
         }
  
-        return null;
+        return lista;
     }
  
     public static Carro addCarro(String nome, String marca, String fabricacao, String modelo, String data) {
-    	System.out.println("xxx");
     	Carro carro = new Carro(i, nome, marca, fabricacao, modelo, data);
     	carroMap.put(carro.getId(), carro);
         i++;

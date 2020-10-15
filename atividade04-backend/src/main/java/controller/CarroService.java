@@ -59,36 +59,71 @@ public class CarroService extends HttpServlet {
             }
         }
  
-        // GET BY NAME
-        if (request.getParameter("marca") != null) {
-        	Carro carro = CarroDAO.getCarroByMarca(request.getParameter("marca"));
+     // GET BY MARCA
+     		if (request.getParameter("marca") != null) {
  
-            if (carro != null) {
- 
-                JSONObject jsonObject = new JSONObject();
- 
-                jsonObject.put("id", carro.getId());
-                jsonObject.put("nome", carro.getNome());
-                jsonObject.put("marca", carro.getMarca());
-                jsonObject.put("fabricacao", carro.getFabricacao());
-                jsonObject.put("modelo", carro.getModelo());
-                jsonObject.put("data", carro.getData());
- 
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().print(jsonObject.toString());
-                response.getWriter().flush();
- 
-            }
-            return;
-        }
+     			List<Carro> lista = CarroDAO.getCarroByMarca(request.getParameter("marca"));
+     			try {
+     				JSONArray jArray = new JSONArray();
+
+     				for (Carro carro : lista) {
+     					JSONObject jsonObject = new JSONObject();
+
+     					jsonObject.put("id", carro.getId());
+     					jsonObject.put("nome", carro.getNome());
+     					jsonObject.put("marca", carro.getMarca());
+     					jsonObject.put("modelo", carro.getModelo());
+     					jsonObject.put("fabricacao", carro.getFabricacao());
+     					jsonObject.put("data", carro.getData());
+
+     					jArray.put(jsonObject);
+     				}
+
+     				response.setContentType("application/json");
+     				response.setCharacterEncoding("UTF-8");
+     				response.getWriter().print(jArray.toString());
+     				response.getWriter().flush();
+     			} catch (Exception e) {
+
+     			}
+     			return;
+     		}
+
+     		// GET BY QUANTIDADE
+     		if (request.getParameter("quantidade") != null) {
+     			List<Carro> lista = CarroDAO.getCarroByQuantidade(Integer.parseInt(request.getParameter("quantidade")));
+     			
+     			try {
+     				JSONArray jArray = new JSONArray();
+
+     				for (Carro carro : lista) {
+     					JSONObject jsonObject = new JSONObject();
+
+     					jsonObject.put("id", carro.getId());
+     					jsonObject.put("nome", carro.getNome());
+     					jsonObject.put("marca", carro.getMarca());
+     					jsonObject.put("modelo", carro.getModelo());
+     					jsonObject.put("fabricacao", carro.getFabricacao());
+     					jsonObject.put("data", carro.getData());
+
+     					jArray.put(jsonObject);
+     				}
+
+     				response.setContentType("application/json");
+     				response.setCharacterEncoding("UTF-8");
+     				response.getWriter().print(jArray.toString());
+     				response.getWriter().flush();
+     			} catch (Exception e) {
+
+     			}
+     			return;
+     		}
  
         // GET ALL
         List<Carro> list = CarroDAO.getAllCarros();
  
         try {
             JSONArray jArray = new JSONArray();
-            System.out.println("todos");
             for (Carro carro : list) {
                 JSONObject jsonObject = new JSONObject();
  
@@ -113,7 +148,6 @@ public class CarroService extends HttpServlet {
  
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- System.out.println("ebntrou no post");
         StringBuffer jb = new StringBuffer();
         String line = null;
         try {
@@ -129,7 +163,6 @@ public class CarroService extends HttpServlet {
         try {
             // Request
             jsonObject = new JSONObject(jb.toString());
-            System.out.println("Adddd");
             carro = CarroDAO.addCarro(jsonObject.getString("nome") , jsonObject.getString("marca"), jsonObject.getString("modelo"), jsonObject.getString("fabricacao"), jsonObject.getString("data"));
             System.out.println(carro.toString());
             // Response
@@ -178,7 +211,7 @@ public class CarroService extends HttpServlet {
                     jsonObject = new JSONObject(jb.toString());
                     System.out.println(params[1]);
                     carro = CarroDAO.updateCarro(Integer.parseInt(params[1]), jsonObject.getString("nome") , jsonObject.getString("marca"), jsonObject.getString("modelo"), jsonObject.getString("fabricacao"), jsonObject.getString("data"));
- System.out.println("put" + carro.toString());
+ 
                     // Response
                     jsonObject = new JSONObject();
                     jsonObject.put("id", carro.getId());
