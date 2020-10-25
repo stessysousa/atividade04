@@ -67,7 +67,7 @@ export default {
 
       carro: {},
       carros: [],
-      baseURI: "http://localhost:8080/atividade04-backend/api/carros",
+      baseURI: "http://localhost:8080/api/carros",
     };
   },
 

@@ -39,7 +39,7 @@ export default {
   name: "Cadastrar",
   data() {
     return {
-      baseURI: "http://localhost:8080/atividade04-backend/api/carros/",
+      baseURI: "http://localhost:8080/api/carros/",
       carro: {nome: "", marca: "", modelo: "", fabricacao: "", data: ""},
       
     };
